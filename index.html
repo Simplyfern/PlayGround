@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#101619" />
+<title>LAST LIGHT // Wasteland Run</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Press+Start+2P&display=swap');
+:root{--ink:#111719;--panel:#1b2425;--panel2:#222d2d;--line:#48504a;--cream:#e9dfc2;--muted:#989985;--orange:#f4a45e;--cyan:#73d8cb;--red:#e6695e;--green:#a4d47b}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#101618;color:var(--cream)}body{font-family:'DM Mono',monospace;background:radial-gradient(ellipse at 50% -10%,#29302c 0,#141a1b 45%,#0d1214 100%);padding:clamp(10px,2.4vw,30px);display:flex;justify-content:center;align-items:flex-start}.shell{width:min(1020px,100%);border:1px solid #48504a;background:#141a1b;box-shadow:0 20px 70px #0009;position:relative}.shell:before,.shell:after{content:'';position:absolute;width:8px;height:8px;background:#a6a18a;z-index:3;top:8px}.shell:before{left:8px}.shell:after{right:8px}.topline{height:42px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #353d3c;color:#a6a18a;font-size:10px;letter-spacing:1.6px}.brand{color:#f3a05d;font-family:'Press Start 2P',monospace;font-size:10px;letter-spacing:0}.brand i{font-style:normal;color:var(--cream)}.sys{display:flex;gap:14px;align-items:center}.signal{color:#8acb85}.signal:before{content:'●';font-size:8px;margin-right:6px}.scene-wrap{position:relative;border-bottom:1px solid #414a45;background:#252825}.scene{width:100%;height:auto;display:block;image-rendering:pixelated;aspect-ratio:960/330}.scene-label{position:absolute;left:18px;top:14px;font-size:9px;letter-spacing:1px;color:#e3c991;text-shadow:1px 2px #151719;background:#171b1bc9;padding:7px 9px;border-left:2px solid var(--orange)}.weather{position:absolute;right:17px;top:14px;color:#c3b48e;font-size:9px;letter-spacing:1px;text-shadow:1px 1px #111}.scene-vignette{position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 36px #0e111066}.hud{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:17px 20px 12px}.stat{background:#1b2323;border:1px solid #3e4743;padding:11px 13px 10px;position:relative;min-width:0}.stat-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;font-size:10px;letter-spacing:1.1px}.stat-name{color:#d5d0b8}.stat-icon{margin-right:7px;color:var(--orange)}.stat-value{font-size:11px;color:#fff4d9}.bar{height:8px;background:#101516;border:1px solid #404944;padding:1px;overflow:hidden}.fill{height:100%;width:78%;transition:width .4s ease;image-rendering:pixelated}.fuel .fill{background:repeating-linear-gradient(90deg,#e8a34d 0 7px,#f6bd68 7px 9px)}.food .fill{background:repeating-linear-gradient(90deg,#9bc96d 0 7px,#b8df81 7px 9px)}.health .fill{background:repeating-linear-gradient(90deg,#d65c53 0 7px,#ec7664 7px 9px)}.bar-foot{display:flex;justify-content:space-between;color:#878b7d;font-size:8px;margin-top:6px;letter-spacing:.6px}.dashboard{display:grid;grid-template-columns:1fr 1.7fr 1fr;gap:10px;padding:0 20px 16px}.readout{border-top:1px solid #3b4441;padding-top:10px}.readout small{display:block;color:#868c7c;font-size:8px;letter-spacing:1.2px;margin-bottom:5px}.readout strong{font-family:'Press Start 2P',monospace;font-size:13px;color:var(--cream);font-weight:400}.readout strong em{font-family:'DM Mono';font-style:normal;font-size:10px;color:#aaa993}.progress{height:3px;background:#303835;margin-top:9px;position:relative}.progress span{height:100%;display:block;background:var(--orange);width:0;transition:width .25s}.log{border-top:1px solid #3b4441;padding-top:10px;color:#b1ad96;font-size:10px;line-height:1.5}.log small{display:block;color:#828a7b;font-size:8px;letter-spacing:1px;margin-bottom:5px}.log b{color:#e7ad6d;font-weight:400}.footer{border-top:1px solid #353e3b;padding:10px 20px;display:flex;justify-content:space-between;align-items:center;color:#777e73;font-size:8px;letter-spacing:1px}.footer span:last-child{color:#aaa78f}.card-shade{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:22px;background:#080d0dd9;z-index:5;backdrop-filter:blur(2px)}.card-shade.show{display:flex}.event-card{width:min(530px,100%);background:#202929;border:1px solid #7a6950;box-shadow:0 15px 70px #000c;position:relative;padding:23px 24px 20px;animation:pop .2s steps(3)}@keyframes pop{from{transform:translateY(8px);opacity:0}to{transform:none;opacity:1}}.event-card:before{content:'FIELD REPORT / SURVIVAL DECISION';font-size:8px;color:#efaa66;letter-spacing:1.7px;border-bottom:1px solid #4a5147;display:block;padding-bottom:12px;margin-bottom:17px}.event-kicker{font-size:8px;color:#91c9bc;letter-spacing:1.5px;margin-bottom:9px}.event-title{font-family:'Press Start 2P',monospace;font-size:17px;line-height:1.5;color:#f0e5c7;margin:0 0 12px}.event-desc{font-size:12px;line-height:1.65;color:#b8b8a5;margin:0 0 17px;max-width:60ch}.choices{display:grid;gap:9px}.choice{width:100%;display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:left;background:#293434;color:#e7e2ca;border:1px solid #58615a;padding:12px 13px;font:11px 'DM Mono',monospace;cursor:pointer;transition:background .15s,border-color .15s,transform .15s}.choice:hover,.choice:focus-visible{background:#354340;border-color:#efad68;transform:translateY(-1px);outline:none}.choice .key{color:#efa967;margin-right:8px}.choice .delta{color:#a7d27b;white-space:nowrap;font-size:9px}.choice .delta.negative{color:#e87868}.event-tip{margin-top:13px;font-size:8px;color:#848b7d;letter-spacing:.5px}.ending{display:none;position:absolute;inset:0;z-index:7;background:#0d1414ed;align-items:center;justify-content:center;text-align:center;padding:25px}.ending.show{display:flex}.ending-inner{max-width:440px}.ending h2{font:18px/1.5 'Press Start 2P';color:var(--orange);margin:0 0 18px}.ending p{font-size:13px;color:#c1c0ae;line-height:1.7}.restart{margin-top:14px;background:#eaa05d;color:#181d1b;border:0;padding:13px 19px;font:10px 'Press Start 2P';cursor:pointer}.toast{position:absolute;bottom:15px;left:50%;transform:translateX(-50%);background:#121819;color:#f4af6d;border:1px solid #735b42;padding:7px 11px;font-size:9px;letter-spacing:.6px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:4}.toast.show{opacity:1}
+@media(max-width:600px){body{padding:0;background:#101618}.shell{border-left:0;border-right:0;min-height:100vh}.topline{padding:0 16px;height:40px}.brand{font-size:8px}.sys{font-size:8px;gap:8px}.scene-label{left:9px;top:9px;font-size:7px;padding:5px 6px}.weather{right:9px;top:10px;font-size:7px}.hud{padding:12px 11px 9px;gap:6px}.stat{padding:9px 7px}.stat-head{font-size:8px;letter-spacing:.5px;align-items:flex-start}.stat-icon{margin-right:3px}.stat-value{font-size:9px}.bar{height:7px}.bar-foot{font-size:7px}.dashboard{grid-template-columns:.75fr 1fr .75fr;gap:7px;padding:0 11px 12px}.readout strong{font-size:10px}.readout strong em{font-size:8px}.log{font-size:8px}.footer{padding:9px 11px;font-size:7px}.card-shade{padding:13px}.event-card{padding:18px 16px 15px}.event-title{font-size:14px}.event-desc{font-size:11px;margin-bottom:14px}.choice{font-size:10px;padding:11px 10px}.event-tip{font-size:7px}.ending h2{font-size:14px}}
+</style>
+</head>
+<body>
+<main class="shell" aria-label="Last Light survival game">
+  <header class="topline"><div class="brand">LAST <i>LIGHT</i></div><div class="sys"><span>SECTOR 09</span><span class="signal">SIGNAL WEAK</span></div></header>
+  <section class="scene-wrap" aria-label="Scrolling wasteland journey">
+    <canvas class="scene" id="scene" width="960" height="330" aria-label="Pixel art armored van driving through a ruined cyberpunk city"></canvas>
+    <div class="scene-label">THE DEAD ZONE&nbsp; / &nbsp;EASTBOUND</div><div class="weather">ASHFALL&nbsp; · &nbsp;06:42</div><div class="scene-vignette"></div>
+  </section>
+  <section class="hud" aria-label="Survival stats">
+    <div class="stat fuel"><div class="stat-head"><span class="stat-name"><span class="stat-icon">▰</span>FUEL</span><span class="stat-value" id="fuelVal">78%</span></div><div class="bar"><div class="fill" id="fuelBar"></div></div><div class="bar-foot"><span>RESERVE</span><span>GASOLINE</span></div></div>
+    <div class="stat food"><div class="stat-head"><span class="stat-name"><span class="stat-icon">✚</span>RATIONS</span><span class="stat-value" id="foodVal">64%</span></div><div class="bar"><div class="fill" id="foodBar"></div></div><div class="bar-foot"><span>PROVISIONS</span><span>12 DAYS</span></div></div>
+    <div class="stat health"><div class="stat-head"><span class="stat-name"><span class="stat-icon">♥</span>HULL</span><span class="stat-value" id="healthVal">86%</span></div><div class="bar"><div class="fill" id="healthBar"></div></div><div class="bar-foot"><span>CREW VITALS</span><span>STABLE</span></div></div>
+  </section>
+  <section class="dashboard"><div class="readout"><small>ODOMETER</small><strong><span id="distance">00.0</span><em> mi</em></strong><div class="progress"><span id="progress"></span></div></div><div class="log"><small>ROAD LOG / <span id="logTime">DAY 01</span></small><span id="logText">The engine coughs to life. Keep moving.</span></div><div class="readout" style="text-align:right"><small>DESTINATION</small><strong>100<em> mi</em></strong><div class="progress"><span style="width:100%;background:#556057"></span></div></div></section>
+  <footer class="footer"><span>WASTELAND SURVIVAL PROTOCOL v.09</span><span id="status">▶&nbsp; EN ROUTE</span></footer>
+  <div class="card-shade" id="eventShade" role="dialog" aria-modal="true" aria-labelledby="eventTitle"><article class="event-card"><div class="event-kicker" id="eventKicker">DISTRESS SIGNAL / 4 MI AHEAD</div><h2 class="event-title" id="eventTitle">—</h2><p class="event-desc" id="eventDesc"></p><div class="choices" id="choices"></div><div class="event-tip">CHOOSE CAREFULLY. EVERY MILE COSTS SOMETHING. &nbsp; [1] / [2]</div></article></div>
+  <div class="ending" id="ending"><div class="ending-inner"><h2 id="endTitle"></h2><p id="endText"></p><button class="restart" id="restart">↻&nbsp; DRIVE AGAIN</button></div></div>
+  <div class="toast" id="toast"></div>
+</main>
+<script>
+(() => {
+ const canvas=document.getElementById('scene'),ctx=canvas.getContext('2d');ctx.imageSmoothingEnabled=false;
+ const palette={sky:'#444b48',sky2:'#65706a',sun:'#d29261',building:'#343c3a',dark:'#222a29',mid:'#515953',sand:'#887659',sand2:'#a28a63',road:'#393b36',road2:'#565448',rust:'#965b42',light:'#d7bd83',cyan:'#71b5ac'};
+ let frame=0,dist=0,fuel=78,food=64,health=86,paused=false,ended=false,elapsed=0,nextEvent=5.8,eventCount=0,last=performance.now(),toastTimer;
+ const $=id=>document.getElementById(id);
+ const rand=(a,b)=>a+Math.random()*(b-a);
+ function rect(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(Math.floor(x),Math.floor(y),Math.ceil(w),Math.ceil(h))}
+ function city(){
+   ctx.fillStyle=palette.sky;ctx.fillRect(0,0,960,230);
+   // atmospheric bands and distant moon
+   rect(0,82,960,58,'#555b55');rect(0,123,960,40,'#65665a');rect(704,37,44,44,palette.sun);rect(712,30,30,8,'#525653');rect(703,81,35,6,'#a97858');
+   // broken skyline, layers drift at parallax speeds
+   const offset=(frame*.12)%960;
+   for(let layer=0;layer<2;layer++){
+    const speed=layer?.42:.2,ox=(frame*speed)%960;
+    for(let i=-1;i<9;i++){
+     let x=i*132-ox+(layer?34:0),base=layer?203:178,w=layer?88:106;
+     const hash=(i+11)*31+(layer*13),h=47+(hash%94);
+     rect(x,base-h,w,h,layer?palette.building:'#404844');
+     rect(x+8,base-h-7,w-18,7,layer?'#414744':'#555a52');
+     // torn roof details / antennae
+     rect(x+19,base-h-15,4,15,'#343c39');rect(x+20,base-h-21,2,7,'#b1664b');
+     for(let wy=base-h+15;wy<base-9;wy+=17)for(let wx=x+12;wx<x+w-8;wx+=18){if(((Math.floor(wx/18)+wy+hash)%4)!==0)rect(wx,wy,5,7,(wy%3)?'#9c7951':'#60746e')}
+     if(hash%3===0){rect(x+w-24,base-h+14,21,5,'#a95443');rect(x+w-21,base-h+11,14,3,'#da885b')}
+     if(layer&&hash%2===0){rect(x+45,base-h-27,2,27,'#262d2c');rect(x+37,base-h-23,18,3,'#262d2c')}
+    }
+   }
+   // smoky horizon
+   rect(0,174,960,18,'#74715f');rect(0,192,960,23,'#66614f');
+   // ground, scrub and road
+   rect(0,210,960,120,palette.sand);rect(0,220,960,110,'#71634c');rect(0,244,960,86,palette.road);
+   rect(0,242,960,3,'#b59868');rect(0,327,960,3,'#a58a61');
+   for(let i=0;i<26;i++){
+    let x=((i*73-frame*1.65)%1020+1020)%1020,y=214+(i*29%25);
+    rect(x,y,4+(i%5),2,'#b19b6b');rect(x+9,y-3,2,4,'#423e35');
+   }
+   for(let i=0;i<8;i++){let x=((i*153-frame*2.7)%1000+1000)%1000;rect(x,236,16,3,'#b59a66');rect(x+4,232,3,4,'#817457')}
+   for(let i=0;i<5;i++){let x=((i*229-frame*1.05)%1050+1050)%1050;rect(x,194,3,40,'#303734');rect(x-9,194,22,4,'#353b38');rect(x-6,184,3,10,'#383d39')}
+   // dashed road markings stream left
+   for(let i=0;i<9;i++){let x=((i*150-frame*4)%1100+1100)%1100-90;rect(x,285,58,4,'#b19d72');rect(x+3,286,48,1,'#d0b681')}
+ }
+ function van(){
+   const bob=Math.floor(Math.sin(frame*.23)*2),x=317,y=168+bob;
+   // dust puffs
+   for(let i=0;i<4;i++){let px=x-26-((frame*2+i*19)%54),py=y+67+(i%2)*7;rect(px,py,8+(i%3)*4,3,'#c4a474');rect(px+4,py-3,5,3,'#a78d65')}
+   // shadow
+   rect(x-17,y+75,281,9,'#292b27');rect(x+8,y+81,232,3,'#242622');
+   // wheels
+   for(const wx of [x+31,x+218]){rect(wx,y+55,47,37,'#1b2020');rect(wx+7,y+59,32,28,'#363c39');rect(wx+14,y+64,18,18,'#8b8064');rect(wx+19,y+68,8,10,'#3b4140');rect(wx+2,y+71,43,4,'#606055')}
+   // armored body silhouette
+   rect(x,y+21,267,43,'#394744');rect(x+23,y+4,174,27,'#43514d');rect(x+197,y+15,62,49,'#35413f');
+   // roof rack and cargo
+   rect(x+31,y-3,152,8,'#252d2c');rect(x+42,y-10,46,9,'#534f42');rect(x+92,y-8,43,7,'#74654d');rect(x+148,y-11,28,8,'#393f3c');rect(x+34,y-5,3,9,'#a36b47');
+   // windows
+   rect(x+29,y+8,42,19,'#172728');rect(x+77,y+8,51,19,'#1c3030');rect(x+136,y+8,48,19,'#172728');rect(x+202,y+23,37,21,'#192728');
+   rect(x+32,y+10,34,2,'#73948c');rect(x+81,y+10,42,2,'#759b91');rect(x+140,y+10,38,2,'#6d8d85');
+   // reinforced panels and details
+   rect(x+6,y+31,13,22,'#58635b');rect(x+10,y+36,5,12,'#293332');rect(x+76,y+33,59,23,'#4e5950');rect(x+82,y+37,4,15,'#303735');rect(x+91,y+37,4,15,'#303735');rect(x+101,y+37,4,15,'#303735');rect(x+111,y+37,4,15,'#303735');rect(x+120,y+37,4,15,'#303735');
+   rect(x+148,y+35,39,20,'#596157');rect(x+154,y+39,27,4,'#303735');rect(x+154,y+47,27,4,'#303735');
+   rect(x+197,y+47,54,9,'#292f2e');rect(x+217,y+32,15,15,'#667067');rect(x+221,y+35,7,8,'#d5a666');
+   // armor strip / lights / bumper
+   rect(x-1,y+60,270,8,'#212a29');rect(x-4,y+67,281,8,'#696451');rect(x-8,y+70,13,9,'#a04f40');rect(x+260,y+60,11,8,'#d87452');rect(x+9,y+49,8,5,'#edb265');rect(x+20,y+48,5,5,'#e5b969');
+   rect(x+33,y+64,37,3,'#b09a68');rect(x+185,y+62,47,3,'#ac9a67');
+   // pixel scratches and antenna
+   rect(x+175,y-25,3,18,'#242b29');rect(x+170,y-27,12,3,'#d1a063');rect(x+41,y+18,5,2,'#9b6150');rect(x+112,y+22,8,2,'#9b6150');
+   // small plate
+   rect(x+197,y+53,19,6,'#272e2c');rect(x+200,y+55,13,2,'#d6b878');
+ }
+ function draw(){city();van();ctx.fillStyle='rgba(16,21,19,.11)';for(let i=0;i<20;i++){let x=(i*59+frame*1.7)%960,y=(i*37+frame*.33)%220;ctx.fillRect(x,y,1,1)}}
+ const events=[
+  {tag:'ROAD ENCOUNTER / 12 MI AHEAD',title:'THE STRANDED',desc:'A mechanic waves you down beside a smoking bike. They offer a can of fuel for a meal—or maybe the other way around.',choices:[{text:'Trade a ration for fuel',delta:{fuel:18,food:-13},summary:'+18 FUEL  /  −13 FOOD'},{text:'Keep rolling. No stops.',delta:{health:-8},summary:'−8 HULL'}]},
+  {tag:'ANOMALY / RADIO FREQUENCY 88.4',title:'GHOST SIGNAL',desc:'A voice on the old emergency band promises supplies at a nearby relay tower. The static sounds almost like a warning.',choices:[{text:'Climb the relay tower',delta:{food:16,health:-12},summary:'+16 RATIONS  /  −12 HULL'},{text:'Follow the signal from the road',delta:{fuel:-12,food:8},summary:'−12 FUEL  /  +8 RATIONS'}]},
+  {tag:'ROAD HAZARD / IMPACT IMMINENT',title:'SCRAP STORM',desc:'A sudden gust sends sheet metal skittering across the highway. The van’s armor can take a hit, but the tires are exposed.',choices:[{text:'Punch through the debris',delta:{health:-18},summary:'−18 HULL'},{text:'Take the long way around',delta:{fuel:-15},summary:'−15 FUEL'}]},
+  {tag:'SETTLEMENT / LIGHTS ON THE RIDGE',title:'THE WAYSTATION',desc:'A tiny settlement has a hand-painted sign: WATER · FOOD · NO QUESTIONS. Their generator sputters in the cold.',choices:[{text:'Give them a little fuel',delta:{fuel:-15,food:22},summary:'−15 FUEL  /  +22 RATIONS'},{text:'Barter spare parts for a patch',delta:{health:17,fuel:-10},summary:'+17 HULL  /  −10 FUEL'}]},
+  {tag:'SUPPLY DROP / ABANDONED CONVOY',title:'PICKING CLEAN',desc:'An overturned transport lies half-buried in the dust. Its cargo might keep you alive. Its radio is still transmitting.',choices:[{text:'Scavenge the cargo bay',delta:{food:24,health:-10},summary:'+24 RATIONS  /  −10 HULL'},{text:' siphon the fuel and go',delta:{fuel:24,health:-7},summary:'+24 FUEL  /  −7 HULL'}]},
+  {tag:'NIGHTFALL / TEMPERATURE DROPPING',title:'BLACKOUT',desc:'The lights flicker out. Something scrapes along the passenger side, just beyond the beam of the headlights.',choices:[{text:'Burn fuel. Keep the lights on.',delta:{fuel:-16,health:9},summary:'−16 FUEL  /  +9 HULL'},{text:'Kill the engine and stay quiet',delta:{food:-10,health:-6},summary:'−10 RATIONS  /  −6 HULL'}]}
+ ];
+ function updateUI(){for(const [key,val] of [['fuel',fuel],['food',food],['health',health]]){$(key+'Val').textContent=Math.max(0,Math.round(val))+'%';$(key+'Bar').style.width=Math.max(0,val)+'%';} $('distance').textContent=dist.toFixed(1).padStart(4,'0');$('progress').style.width=Math.min(100,dist)+'%';$('logTime').textContent=`DAY ${String(1+Math.floor(elapsed/55)).padStart(2,'0')}`}
+ function showEvent(){if(ended)return;paused=true;eventCount++;const ev=events[Math.floor(Math.random()*events.length)];$('eventKicker').textContent=ev.tag;$('eventTitle').textContent=ev.title;$('eventDesc').textContent=ev.desc;$('choices').innerHTML='';ev.choices.forEach((c,i)=>{const b=document.createElement('button');b.className='choice';const isBad=Object.values(c.delta).some(n=>n<0);b.innerHTML=`<span><span class="key">[${i+1}]</span>${c.text}</span><span class="delta ${isBad?'negative':''}">${c.summary}</span>`;b.onclick=()=>choose(c);$('choices').append(b)});$('eventShade').classList.add('show');$('status').innerHTML='Ⅱ&nbsp; DECISION REQUIRED';document.querySelectorAll('.scene-wrap').forEach(el=>el.style.filter='saturate(.6)')}
+ function choose(c){for(const [key,value] of Object.entries(c.delta)){if(key==='fuel')fuel+=value;if(key==='food')food+=value;if(key==='health')health+=value}fuel=Math.min(100,fuel);food=Math.min(100,food);health=Math.min(100,health);$('eventShade').classList.remove('show');paused=false;nextEvent=elapsed+rand(7.5,10);$('status').innerHTML='▶&nbsp; EN ROUTE';document.querySelectorAll('.scene-wrap').forEach(el=>el.style.filter='');$('logText').textContent=`${c.summary}. The road takes its cut.`;showToast(c.summary);updateUI();checkEnd()}
+ function showToast(message){const t=$('toast');t.textContent=message;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}
+ function checkEnd(){if(fuel<=0||food<=0||health<=0){ended=true;paused=true;$('endTitle').textContent='RUN ENDED';$('endText').textContent=`The road wins this time. You made it ${dist.toFixed(1)} miles before the ${fuel<=0?'fuel ran dry':food<=0?'rations ran out':'crew went down'}. The lights go out in the dead zone.`;$('ending').classList.add('show');$('status').textContent='×  SIGNAL LOST';}else if(dist>=100){ended=true;paused=true;$('endTitle').textContent='YOU MADE IT';$('endText').textContent='The city falls behind as the sunrise breaks over the eastern ridge. The last light was enough. You survived the run.';$('ending').classList.add('show');$('status').textContent='✓  ARRIVED';}}
+ function tick(now){const dt=Math.min(.1,(now-last)/1000);last=now;if(!paused&&!ended){elapsed+=dt;frame+=dt*14;dist+=dt*1.35;fuel-=dt*.42;food-=dt*.20;if(Math.floor(elapsed)%13===0&&Math.floor(elapsed-dt)!==Math.floor(elapsed))health-=.25;if(elapsed>=nextEvent){showEvent()}if(fuel<=0||food<=0||health<=0||dist>=100)checkEnd();updateUI()}else{frame+=dt*1.1}draw();requestAnimationFrame(tick)}
+ document.addEventListener('keydown',e=>{if(paused&&(e.key==='1'||e.key==='2'))$('choices').children[Number(e.key)-1]?.click()});$('restart').onclick=()=>location.reload();updateUI();requestAnimationFrame(tick);
+})();
+</script>
+</main>
+</body>
+</html>
