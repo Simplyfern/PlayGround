@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101210">
+  <title>Dead West — The Long Walk</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <main class="game-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Dead West home"><span class="brand-mark">DW</span><span>DEAD<span class="brand-red">WEST</span></span></a>
+      <div class="top-center"><span class="signal-dot"></span> FRONTIER BROADCAST <span class="top-divider">/</span> <span id="broadcast">NO SIGNAL BEYOND THE LINE</span></div>
+      <div class="top-right"><span class="season">YEAR 2091</span><span class="top-divider">/</span><span class="difficulty">STANDARD ISSUE</span></div>
+    </header>
+
+    <section class="intro" id="intro">
+      <div class="intro-kicker"><span>FIELD GUIDE NO. 08</span><span class="kicker-line"></span><span>WESTBOUND MIGRATION</span></div>
+      <h1>THE LONG <span>WALK</span></h1>
+      <p class="intro-copy">The grid went dark. The water went black. Somewhere beyond the dead zones,<br class="desktop-break"> there might still be a place where a person can live without a number.</p>
+      <button class="begin-button" id="startButton"><span>BEGIN THE CROSSING</span><span class="button-arrow">→</span></button>
+      <div class="intro-foot"><span>NO ONE IS COMING TO GET YOU</span><span>— W. TERRITORY, UNMAPPED</span></div>
+    </section>
+
+    <section class="game-layout hidden" id="gameLayout" aria-label="Expedition">
+      <div class="main-column">
+        <section class="scene-frame">
+          <div class="scene-topline"><span id="regionLabel">ASHFALL COUNTY</span><span id="weatherLabel">ASH WIND · VISIBILITY LOW</span></div>
+          <div class="scene-wrap"><canvas id="scene" width="480" height="220" aria-label="Pixel art frontier landscape"></canvas><div class="scene-vignette"></div><div class="scene-caption"><span id="sceneCaption">MILE 000</span><span class="caption-right">FOLLOW THE OLD HIGHWAY</span></div></div>
+          <div class="route-strip"><div class="route-title">THE WESTERN LINE <span>— 1,000 MI</span></div><div class="route-track"><div class="route-progress" id="routeProgress"></div><div class="route-marker marker-start"></div><div class="route-marker marker-one"></div><div class="route-marker marker-two"></div><div class="route-marker marker-three"></div><div class="route-marker marker-end"></div></div><div class="route-labels"><span>THE YARD</span><span>ASHFALL</span><span>DEAD BASIN</span><span>HIGH PASS</span><span>FREE COUNTRY</span></div></div>
+        </section>
+
+        <section class="journey-card" id="journeyCard">
+          <div class="journey-heading"><div><div class="section-eyebrow" id="dayLabel">DAY 01 · OUTSIDE THE FENCE</div><h2 id="journeyTitle">No road back.</h2></div><div class="pace-control"><span class="section-eyebrow">PACE</span><div class="pace-options" role="group" aria-label="Travel pace"><button class="pace-option" data-pace="careful">CAREFUL</button><button class="pace-option selected" data-pace="steady">STEADY</button><button class="pace-option" data-pace="hard">HARD</button></div></div></div>
+          <p class="journey-copy" id="journeyCopy">The fence is behind you. Four people, one patched-together hauler, and a direction scrawled on a ration wrapper. Keep moving west.</p>
+          <div class="journey-actions" id="journeyActions"><button class="primary-action" id="travelButton"><span class="action-icon">▶</span><span>TRAVEL WEST</span><span class="action-meta">50 MI · 1 DAY</span></button><button class="secondary-action" id="campButton"><span>MAKE CAMP</span><span class="action-meta">REST · 1 DAY</span></button><button class="secondary-action" id="scoutButton"><span>SCOUT AHEAD</span><span class="action-meta">SAFER ROAD · 1 DAY</span></button></div>
+          <div class="encounter hidden" id="encounter"><div class="encounter-mark">!</div><div class="encounter-body"><div class="section-eyebrow" id="encounterTag">ROAD ENCOUNTER</div><h3 id="encounterTitle">A roadblock ahead.</h3><p id="encounterText"></p><div class="encounter-choices" id="encounterChoices"></div></div></div>
+        </section>
+
+        <section class="log-card"><div class="log-heading"><span class="section-eyebrow">FIELD NOTES</span><span class="log-status"><span class="signal-dot"></span> RECENT</span></div><div class="log-list" id="logList" aria-live="polite"></div></section>
+      </div>
+
+      <aside class="sidebar">
+        <section class="status-card"><div class="card-heading"><span class="section-eyebrow">EXPEDITION STATUS</span><span class="status-live">● LIVE</span></div><div class="miles-display"><span class="miles-num" id="milesNum">000</span><span class="miles-unit">MILES<br>WEST</span><span class="miles-goal">/ 1,000</span></div><div class="progress-line"><div id="statusProgress"></div></div><div class="status-sub"><span id="dayCount">DAY 01</span><span id="dateLabel">LATE SUMMER</span></div></section>
+        <section class="supplies-card"><div class="card-heading"><span class="section-eyebrow">CARGO HOLD</span><span class="cargo-capacity" id="cargoCapacity">0 / 60</span></div><div class="supply-grid" id="supplyGrid"></div><div class="supply-note" id="supplyNote">EVERYTHING YOU CARRY HAS A COST.</div></section>
+        <section class="crew-card"><div class="card-heading"><span class="section-eyebrow">YOUR PEOPLE</span><span class="crew-count">04 SOULS</span></div><div id="crewList"></div><div class="morale-row"><span class="section-eyebrow">SPIRIT</span><div class="morale-meter"><div id="moraleFill"></div></div><span id="moraleValue">68%</span></div></section>
+        <section class="threat-card"><div class="threat-top"><span class="section-eyebrow">PURSUIT INDEX</span><span class="threat-value" id="threatValue">LOW</span></div><div class="threat-meter"><i id="threatFill"></i></div><p id="threatCopy">No patrols on the horizon. Yet.</p></section>
+        <div class="sidebar-footer"><span>WAGON 04-B · SALVAGED</span><span>STAY OFF THE GRID</span></div>
+      </aside>
+    </section>
+
+    <section class="ending hidden" id="ending"><div class="ending-stamp">FREE COUNTRY<br><span>NO REGISTRY · NO CHAINS</span></div><div class="section-eyebrow">THE LONG WALK · COMPLETE</div><h2 id="endingTitle">You made it west.</h2><p id="endingCopy"></p><div class="ending-stats" id="endingStats"></div><button class="begin-button" id="restartButton"><span>WALK AGAIN</span><span class="button-arrow">↻</span></button></section>
+    <footer class="page-footer"><span>DEAD WEST <span class="footer-dot">●</span> A FIELD SURVIVAL SIMULATION</span><span>THE BORDER IS ONLY A LINE ON A MAP</span></footer>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="game.js"></script>
+</body>
+</html>
