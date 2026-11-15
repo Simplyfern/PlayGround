@@ -21,7 +21,7 @@
 </head>
 <body>
 <main class="shell" aria-label="Last Light survival game">
-  <header class="topline"><div class="brand">LAST <i>LIGHT</i></div><div class="sys"><span>SECTOR 09</span><span class="signal">SIGNAL WEAK</span></div></header>
+  <header class="topline"><div class="brand">LAST <i>LIGHT</i></div><div class="sys"><span id="sectorHeader">OLIVE-AMBER</span><span class="signal">SIGNAL WEAK</span></div></header>
   <section class="scene-wrap" aria-label="Scrolling wasteland journey">
     <canvas class="scene" id="scene" width="960" height="330" aria-label="Pixel art armored van driving through a ruined cyberpunk city"></canvas>
     <div class="scene-label">THE DEAD ZONE&nbsp; / &nbsp;EASTBOUND</div><div class="weather">ASHFALL&nbsp; · &nbsp;06:42</div><div class="scene-vignette"></div>
@@ -80,10 +80,21 @@
    let camping=false,pendingCrewEffect=null,currentEventHazard=false;
   let scavengeActive=false,scavengeFinished=false,scavengeEndsAt=0,scavengeLastSecond=10,scavengeHits=0,scavengeNextSurvivorAt=0,scavengeSurvivorUntil=0,scavengeSurvivorActive=false;
  function rect(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(Math.floor(x),Math.floor(y),Math.ceil(w),Math.ceil(h))}
+  const sectorPalettes=[
+   {name:'OLIVE-AMBER',sky:'#4b4d3c',haze:'#66664a',hazeLow:'#77714e',sun:'#d0a15e',buildingFar:'#424438',buildingNear:'#34392f',roofFar:'#595a45',roofNear:'#45483a',antenna:'#33392f',window:'#a18b55',accent:'#aa8151',accentBright:'#d0a15e',horizon:'#79724e',horizonLow:'#696248'},
+   {name:'RUST-ORANGE',sky:'#503b35',haze:'#81513d',hazeLow:'#a05d3e',sun:'#e99555',buildingFar:'#493630',buildingNear:'#382d2a',roofFar:'#63463a',roofNear:'#4a3830',antenna:'#332b29',window:'#c07a4d',accent:'#c47749',accentBright:'#eca05d',horizon:'#9b5b3e',horizonLow:'#7b4938'},
+   {name:'TOXIC-GREEN',sky:'#2d4438',haze:'#526944',hazeLow:'#6e8544',sun:'#c4e65e',buildingFar:'#3f4b39',buildingNear:'#2c3b32',roofFar:'#536345',roofNear:'#3d4b37',antenna:'#29392f',window:'#a8c957',accent:'#95b64e',accentBright:'#d1ed63',horizon:'#6c8241',horizonLow:'#536b3d'},
+   {name:'ASH-GRAY',sky:'#414648',haze:'#656d6f',hazeLow:'#7c807e',sun:'#c4c5bd',buildingFar:'#4b5050',buildingNear:'#373c3d',roofFar:'#646867',roofNear:'#4d5252',antenna:'#333839',window:'#b2b2a7',accent:'#a6a69e',accentBright:'#d6d4c8',horizon:'#777a77',horizonLow:'#626866'},
+   {name:'NEON-PURPLE',sky:'#30273e',haze:'#51405d',hazeLow:'#704b78',sun:'#e05bd0',buildingFar:'#41334e',buildingNear:'#2b243a',roofFar:'#594265',roofNear:'#3d3151',antenna:'#292237',window:'#cf65cb',accent:'#bd50bb',accentBright:'#f078dc',horizon:'#704b78',horizonLow:'#513e63'}
+  ];
+  function sectorIndexAt(miles){return Math.min(4,Math.max(0,Math.floor(miles/100)))}
+  function blendHex(from,to,amount){const a=parseInt(from.slice(1),16),b=parseInt(to.slice(1),16),mix=shift=>Math.round(((a>>shift)&255)*(1-amount)+((b>>shift)&255)*amount);return '#'+[16,8,0].map(shift=>mix(shift).toString(16).padStart(2,'0')).join('')}
+  function sceneryPaletteAt(miles){const index=sectorIndexAt(miles),next=Math.min(4,index+1),amount=index===4?0:(miles-index*100)/100;const palette={};for(const key of Object.keys(sectorPalettes[index]))if(key!=='name')palette[key]=blendHex(sectorPalettes[index][key],sectorPalettes[next][key],amount);return palette}
   function city(){
-   ctx.fillStyle=palette.sky;ctx.fillRect(0,0,960,230);
+   const scenery=sceneryPaletteAt(dist);
+   ctx.fillStyle=scenery.sky;ctx.fillRect(0,0,960,230);
    // atmospheric bands and distant moon
-   rect(0,82,960,58,'#555b55');rect(0,123,960,40,'#65665a');rect(704,37,44,44,palette.sun);rect(712,30,30,8,'#525653');rect(703,81,35,6,'#a97858');
+   rect(0,82,960,58,scenery.haze);rect(0,123,960,40,scenery.hazeLow);rect(704,37,44,44,scenery.sun);rect(712,30,30,8,scenery.sky);rect(703,81,35,6,scenery.accent);
    // broken skyline, layers drift at parallax speeds
    const offset=(frame*.12)%960;
    for(let layer=0;layer<2;layer++){
@@ -91,23 +102,23 @@
     for(let i=-1;i<9;i++){
      let x=i*132-ox+(layer?34:0),base=layer?203:178,w=layer?88:106;
      const hash=(i+11)*31+(layer*13),h=47+(hash%94);
-     rect(x,base-h,w,h,layer?palette.building:'#404844');
-     rect(x+8,base-h-7,w-18,7,layer?'#414744':'#555a52');
+     rect(x,base-h,w,h,layer?scenery.buildingNear:scenery.buildingFar);
+     rect(x+8,base-h-7,w-18,7,layer?scenery.roofNear:scenery.roofFar);
      // torn roof details / antennae
-     rect(x+19,base-h-15,4,15,'#343c39');rect(x+20,base-h-21,2,7,'#b1664b');
-     for(let wy=base-h+15;wy<base-9;wy+=17)for(let wx=x+12;wx<x+w-8;wx+=18){if(((Math.floor(wx/18)+wy+hash)%4)!==0)rect(wx,wy,5,7,(wy%3)?'#9c7951':'#60746e')}
-     if(hash%3===0){rect(x+w-24,base-h+14,21,5,'#a95443');rect(x+w-21,base-h+11,14,3,'#da885b')}
-     if(layer&&hash%2===0){rect(x+45,base-h-27,2,27,'#262d2c');rect(x+37,base-h-23,18,3,'#262d2c')}
+     rect(x+19,base-h-15,4,15,scenery.antenna);rect(x+20,base-h-21,2,7,scenery.accentBright);
+     for(let wy=base-h+15;wy<base-9;wy+=17)for(let wx=x+12;wx<x+w-8;wx+=18){if(((Math.floor(wx/18)+wy+hash)%4)!==0)rect(wx,wy,5,7,scenery.window)}
+     if(hash%3===0){rect(x+w-24,base-h+14,21,5,scenery.accent);rect(x+w-21,base-h+11,14,3,scenery.accentBright)}
+     if(layer&&hash%2===0){rect(x+45,base-h-27,2,27,scenery.antenna);rect(x+37,base-h-23,18,3,scenery.antenna)}
     }
    }
    // smoky horizon
-   rect(0,174,960,18,'#74715f');rect(0,192,960,23,'#66614f');
+   rect(0,174,960,18,scenery.horizon);rect(0,192,960,23,scenery.horizonLow);
    // ground, scrub and road
-   rect(0,210,960,120,palette.sand);rect(0,220,960,110,'#71634c');rect(0,244,960,86,palette.road);
-   rect(0,242,960,3,'#b59868');rect(0,327,960,3,'#a58a61');
+   rect(0,210,960,120,scenery.horizon);rect(0,220,960,110,scenery.horizonLow);rect(0,244,960,86,scenery.buildingNear);
+   rect(0,242,960,3,scenery.accentBright);rect(0,327,960,3,scenery.accent);
    for(let i=0;i<26;i++){
     let x=((i*73-frame*1.65)%1020+1020)%1020,y=214+(i*29%25);
-    rect(x,y,4+(i%5),2,'#b19b6b');rect(x+9,y-3,2,4,'#423e35');
+    rect(x,y,4+(i%5),2,scenery.accentBright);rect(x+9,y-3,2,4,scenery.antenna);
    }
    for(let i=0;i<8;i++){let x=((i*153-frame*2.7)%1000+1000)%1000;rect(x,236,16,3,'#b59a66');rect(x+4,232,3,4,'#817457')}
    for(let i=0;i<5;i++){let x=((i*229-frame*1.05)%1050+1050)%1050;rect(x,194,3,40,'#303734');rect(x-9,194,22,4,'#353b38');rect(x-6,184,3,10,'#383d39')}
@@ -164,7 +175,7 @@
   function activateSkill(member){if(!canUseSkill(member))return;member.skillUses--;let message='';if(member.positiveTrait==='Tinkerer'){health=Math.min(100,health+20);message=`${member.name} repaired the hull (+20).`}else if(member.positiveTrait==='Medic'){const target=crew.filter(person=>person.health>0&&person.health<100).sort((a,b)=>a.health-b.health)[0];if(!target){member.skillUses++;return}target.health=Math.min(100,target.health+30);message=`${member.name} treated ${target.name} (+30 vitals).`}else if(member.positiveTrait==='Scavenger'){addScrap(14);message=`${member.name} salvaged a cache (+${Math.round(14*scrapMultiplier())} scrap).`}else{nextEvent+=12;message=`${member.name} cleared the road ahead. Next encounter delayed.`}$('logText').textContent=message;showToast(message);updateUI()}
   function updateCrew(){let active=0;$('crewList').innerHTML=crew.map(member=>{const state=crewState(member);if(state!=='dead')active++;const label=state==='dead'?'DOWN':state==='fit'?'FIT':state==='wounded'?'WOUNDED':'CRITICAL';return `<div class="crew-member ${state}" aria-label="${member.name}, ${label}, ${Math.round(member.health)} percent, ${member.positiveTrait}, ${member.negativeTrait}"><div class="crew-avatar">${member.initial}</div><div class="crew-info"><div class="crew-top"><span class="crew-name">${member.name}</span><span class="crew-status">${label}</span></div><div class="trait-tags"><span class="trait-tag positive">${member.positiveTrait}</span><span class="trait-tag negative">${member.negativeTrait}</span></div><div class="crew-bar"><span style="width:${Math.max(0,member.health)}%"></span></div><button class="crew-skill" type="button" ${canUseSkill(member)?'':'disabled'}><span>${skillName(member)}</span><small>${member.skillUses}/2 USES</small></button></div></div>`}).join('');$('crewList').querySelectorAll('.crew-skill').forEach((button,index)=>button.onclick=()=>activateSkill(crew[index]));$('crewCount').textContent=`${active} / 3 ACTIVE`}
   function renderRig(){const slots=Object.entries(rig);$('rigSlots').innerHTML=slots.map(([slot,part])=>`<div class="rig-slot ${part?'equipped':''}"><span>${slot.toUpperCase()}</span><strong>${part?part.name:'EMPTY'}</strong>${part?`<small>${part.short}</small>`:''}</div>`).join('')}
-   function updateUI(){for(const [key,val] of [['fuel',fuel],['food',food],['health',health]]){$(key+'Val').textContent=Math.max(0,Math.round(val))+'%';$(key+'Bar').style.width=Math.max(0,val)+'%';} $('distance').textContent=dist.toFixed(1).padStart(4,'0');$('progress').style.width=Math.min(100,dist/5)+'%';$('scrapVal').textContent=Math.floor(scrap);$('moraleVal').textContent=Math.round(morale);$('logTime').textContent=`DAY ${String(1+Math.floor(elapsed/55)).padStart(2,'0')}`;$('scavengeLaunch').disabled=paused||ended||food<5;$('campButton').disabled=ended||(paused&&!camping)||(!camping&&food<15);$('campButton').innerHTML=camping?'<span>▶ &nbsp; RESUME DRIVE</span><small>LEAVE CAMP AND CONTINUE</small>':'<span>⌂ &nbsp; MAKE CAMP</span><small>PAUSE · 15 RATIONS · RESTORE SKILLS</small>';updateCrew();renderRig()}
+   function updateUI(){for(const [key,val] of [['fuel',fuel],['food',food],['health',health]]){$(key+'Val').textContent=Math.max(0,Math.round(val))+'%';$(key+'Bar').style.width=Math.max(0,val)+'%';} $('distance').textContent=dist.toFixed(1).padStart(4,'0');$('sectorHeader').textContent=sectorPalettes[sectorIndexAt(dist)].name;$('progress').style.width=Math.min(100,dist/5)+'%';$('scrapVal').textContent=Math.floor(scrap);$('moraleVal').textContent=Math.round(morale);$('logTime').textContent=`DAY ${String(1+Math.floor(elapsed/55)).padStart(2,'0')}`;$('scavengeLaunch').disabled=paused||ended||food<5;$('campButton').disabled=ended||(paused&&!camping)||(!camping&&food<15);$('campButton').innerHTML=camping?'<span>▶ &nbsp; RESUME DRIVE</span><small>LEAVE CAMP AND CONTINUE</small>':'<span>⌂ &nbsp; MAKE CAMP</span><small>PAUSE · 15 RATIONS · RESTORE SKILLS</small>';updateCrew();renderRig()}
  function addRoadLog(text,type='relief'){const line=document.createElement('div');line.className=`log-line ${type}`;line.textContent=text;$('logFeed').prepend(line);while($('logFeed').children.length>4)$('logFeed').lastElementChild.remove()}
   function emitRoadFlavor(){const living=crew.filter(member=>member.health>0),hasTrait=trait=>living.some(member=>member.negativeTrait===trait);let text,type,roll=Math.random();if(roll<.28){const reliefs=['A pale strip of sunlight reaches the dashboard. For a moment, the road feels less endless.','The engine settles into a steady rhythm; everyone unclenches their jaw.','A clean patch of road. No alarms, no voices on the radio.','Someone shares a terrible joke. It gets a real laugh anyway.'];text=pick(reliefs);type='relief';if(Math.random()<.35)morale=Math.min(100,morale+1)}else if(roll<.56){const frictions=[];if(hasTrait('Paranoid'))frictions.push('Paranoid eyes keep searching the mirrors; the crew grows tense.');if(hasTrait('Glutton'))frictions.push('Glutton’s snack stash is discovered. The argument leaves everyone irritated.');if(hasTrait('Reckless'))frictions.push('Reckless driving rattles the crew; everyone loses a little nerve.');if(hasTrait('Sickly'))frictions.push('Sickly coughs echo through the van; the crew worries about getting run down.');if(!frictions.length)frictions.push('A short argument over the radio leaves everyone on edge.');text=pick(frictions);type='tension';if(Math.random()<.55){if(Math.random()<.5){morale=Math.max(0,morale-1);text+=' −1 MORALE.'}else{const dip=1+Math.floor(Math.random()*2);food=Math.max(0,food-dip);text+=` −${dip} RATIONS.`}}}else{const moments=['A cracked music player coughs up half a song.','Jun spots birds circling a distant water tower.','Dust trails fade behind the van; nobody is following.','A hand-drawn road map turns out to be mostly right.'];text=pick(moments);type='relief'}addRoadLog(text,type);updateUI()}
   function refreshMarket(){const injured=crew.filter(member=>member.health>0&&member.health<100).sort((a,b)=>a.health-b.health)[0];$('marketScrap').textContent=Math.floor(scrap);$('buyFuel').disabled=scrap<8||fuel>=100;$('buyRations').disabled=scrap<8||food>=100;$('buyMedkit').disabled=scrap<12||!injured;$('medkitEffect').textContent=injured?`+35 VITALS / ${injured.name.toUpperCase()}`:'NO INJURED CREW';$('marketParts').innerHTML=marketStock.map(part=>`<button class="market-trade part" type="button" data-part="${part.id}" ${scrap<part.price?'disabled':''}><span>${part.name} · ${part.slot}<small>${part.effect}</small></span><strong>${part.price} SCRAP</strong></button>`).join('');$('marketParts').querySelectorAll('[data-part]').forEach(button=>button.onclick=()=>buyPart(button.dataset.part));}
