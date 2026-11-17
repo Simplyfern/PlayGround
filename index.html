@@ -109,6 +109,7 @@
    function addScrap(amount){scrap+=amount*scrapMultiplier()}
    function rationUseMultiplier(){return Math.max(.1,1-Math.min(.5,totalPartStat('rationReduction')))}
    let camping=false,pendingCrewEffect=null,currentEventHazard=false,currentRoadEvent=null,campElapsed=0,campNextAt=0,campCrewFindAt=[],campFindWindow=-1,campPendingAt=0,campPending='',campTrickles=0,campTricklesRequired=3,campNoiseCount=0;
+  let campThreat=0,campExhaustion=0,milesSinceCampReset=0,campActions=0,campResetMiles=dist;
   let scavengeActive=false,scavengeFinished=false,scavengeFinalRun=false,scavengeEndsAt=0,scavengeLastSecond=10,scavengeHits=0,scavengeNextSurvivorAt=0,scavengeSurvivorUntil=0,scavengeSurvivorActive=false,scavengeFailed=false,scavengeRunCount=1,scavengeLootMultiplier=1,scavengeLoot={scrap:0,food:0,fuel:0,ammo:0};
   let strandedPromptActive=false,strandedChanceUsed=false;
    const sectorScavengeCounts={};
